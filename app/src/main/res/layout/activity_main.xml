@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity">
+
+    <Button
+        android:text="添加用户name_01"
+        android:id="@+id/bt_add_user"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="添加用户name_02"
+        android:id="@+id/bt_add_user2"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="添加用户name_03"
+        android:id="@+id/bt_add_user3"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="添加用户name_04"
+        android:id="@+id/bt_add_user4"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="普通查询用户"
+        android:id="@+id/bt_find_user"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="排序查询用户"
+        android:id="@+id/bt_px_user"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="分页查询用户"
+        android:id="@+id/bt_limitoffset_user"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="更新用户"
+        android:id="@+id/bt_update_user"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:text="删库"
+        android:id="@+id/del_db"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+</LinearLayout>

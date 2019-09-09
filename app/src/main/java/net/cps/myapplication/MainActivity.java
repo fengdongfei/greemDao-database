@@ -11,7 +11,9 @@ import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
 import net.cps.myapplication.model.UserEntity;
 
+import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
+import org.greenrobot.greendao.query.WhereCondition;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;
@@ -36,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 插入----添加用户
                 UserEntity ueneity = new UserEntity(Long.parseLong("1000000001"),Long.parseLong("1000000002"),
-                        "name_01",3000001,"nick_01",0,28,
+                        "name_01",3000001,"nick_01",null,28,
                         Long.parseLong("1000000003"),"icon01","18298192053",
                         "安徽省","霍邱县","安徽临水镇",
                         false,false,false,false);
@@ -48,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 插入----添加用户
                 UserEntity ueneity = new UserEntity(Long.parseLong("1000000003"),Long.parseLong("1000000004"),
-                        "name_02",3000002,"nick_02",0,29,
+                        "name_02",3000002,"nick_02",UserEntity.Role.ADMIN,29,
                         Long.parseLong("1000000003"),"icon01","18298192054",
                         "安徽省111","霍邱县111","安徽111临水镇",
                         true,true,true,true);
@@ -60,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 插入----添加用户
                 UserEntity ueneity = new UserEntity(Long.parseLong("1000000005"),Long.parseLong("1000000006"),
-                        "name_03",3000003,"nick_03",0,38,
+                        "name_03",3000003,"nick_03",UserEntity.Role.AUTHOR,38,
                         Long.parseLong("1000000003"),"icon03","18298192054",
                         "安徽省","霍邱县222","安徽临水镇222",
                         true,true,false,false);
@@ -72,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View v) {
                 // 插入----添加用户
                 UserEntity ueneity = new UserEntity(Long.parseLong("1000000007"),Long.parseLong("1000000008"),
-                        "name_04",3000004,"nick_04",0,21,
+                        "name_04",3000004,"nick_04", null,21,
                         Long.parseLong("1000000003"),"icon0111","18298192057",
                         "安徽省333","霍邱县333","安徽临水镇333",
                         false,false,true,true);
@@ -88,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
                         .where(UserEntityDao.Properties.Name.eq("name_02"))
                         .orderAsc(UserEntityDao.Properties.Age)
                         .list();
-                // 查询 age>22 && (isvip==true || isbuy_zone==true)
+                // 查询 age>22 && (isvip==true || isbuy_zone==true) && (name=="name_02" && Isbuy_limit_ads==true )
                 QueryBuilder<UserEntity> qb = userDao.queryBuilder();
                 qb.where(UserEntityDao.Properties.Age.gt(22),
                         qb.or(UserEntityDao.Properties.Isvip.eq(true),UserEntityDao.Properties.Isbuy_zone.eq(true)),
@@ -121,6 +123,55 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.bt_zhuan_user).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //使用属性转换器 查询
+                UserEntity.RoleConverter converter = new UserEntity.RoleConverter();
+                List<UserEntity> authors = userDao.queryBuilder()
+                        .where(UserEntityDao.Properties.Role.eq(converter.convertToDatabaseValue(UserEntity.Role.AUTHOR)))
+                        .list();
+                Log.d("查询中的自定义类型-查询用户信息", ": "+ String.valueOf(Arrays.asList(authors)));
+            }
+        });
+        findViewById(R.id.bt_parms_find).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Query<UserEntity> qb = userDao.queryBuilder()
+                        .where(
+                            UserEntityDao.Properties.Age.gt(21),
+                            UserEntityDao.Properties.Isbuy_limit_export.eq(true))
+                        .build();
+                qb.setParameter(0, 27);
+                qb.setParameter(1, false);
+                List<UserEntity> youngJoes = qb.list();
+                Log.d("传参查询", ": "+ String.valueOf(Arrays.asList(youngJoes)));
+            }
+        });
+        findViewById(R.id.bt_thread_find).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+//                Query<UserEntity> qb = userDao.queryBuilder()
+//                        .where(
+//                            UserEntityDao.Properties.Age.gt(21),
+//                            UserEntityDao.Properties.Isbuy_limit_export.eq(true))
+//                        .build();
+//                qb.setParameter(0, 27);
+//                qb.setParameter(1, false);
+//                List<UserEntity> youngJoes = qb.list();
+//                Log.d("多线程查询", ": "+ String.valueOf(Arrays.asList(youngJoes)));
+            }
+        });
+        findViewById(R.id.bt_oristr_find).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Query<UserEntity> query = userDao.queryBuilder().where(
+                        new WhereCondition.StringCondition("SELECT ALL FROM AWESOME_USERS")
+                ).build();
+                List<UserEntity> youngJoes = query.list();
+                Log.d("原始StringCondition查询", ": "+ String.valueOf(Arrays.asList(youngJoes)));
+            }
+        });
         findViewById(R.id.bt_update_user).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

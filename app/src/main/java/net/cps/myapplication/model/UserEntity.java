@@ -1,5 +1,6 @@
 package net.cps.myapplication.model;
 
+import org.greenrobot.greendao.annotation.Convert;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Index;
@@ -11,6 +12,8 @@ import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
+import org.greenrobot.greendao.converter.PropertyConverter;
+
 import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.CourseEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
@@ -70,7 +73,13 @@ public class UserEntity {
     @NotNull
     private String nick;
 
-    private int role;
+    //转换注释和属性转换器
+    //注意：如果在实体类中定义自定义类型或转换器，则它们必须是静态的。
+    //不要忘记正确处理空值 - 通常，如果输入为null，则应返回null。
+    @Convert(converter = RoleConverter.class, columnType = Integer.class)
+    private Role role;
+
+
     private int age;
     private Long create_time;
     private String icon;
@@ -82,6 +91,36 @@ public class UserEntity {
     private boolean isbuy_zone; // 是否购买云空间
     private boolean isbuy_limit_export;// 是否购买导出数据权限
     private boolean isbuy_limit_ads;// 是否购买屏蔽广告权限
+
+    public enum Role {
+        DEFAULT(0), AUTHOR(1), ADMIN(2);
+
+        final int id;
+
+        Role(int id) {
+            this.id = id;
+        }
+    }
+
+    public static class RoleConverter implements PropertyConverter<Role, Integer> {
+        @Override
+        public Role convertToEntityProperty(Integer databaseValue) {
+            if (databaseValue == null) {
+                return null;
+            }
+            for (Role role : Role.values()) {
+                if (role.id == databaseValue) {
+                    return role;
+                }
+            }
+            return Role.DEFAULT;
+        }
+
+        @Override
+        public Integer convertToDatabaseValue(Role entityProperty) {
+            return entityProperty == null ? null : entityProperty.id;
+        }
+    }
 
 /** Used to resolve relations */
 @Generated(hash = 2040040024)
@@ -104,12 +143,6 @@ public String getNick() {
 }
 public void setNick(String nick) {
     this.nick = nick;
-}
-public int getRole() {
-    return this.role;
-}
-public void setRole(int role) {
-    this.role = role;
 }
 public int getAge() {
     return this.age;
@@ -184,8 +217,11 @@ private transient Long coursemodel__resolvedKey;
 @Generated(hash = 1814575071)
 private transient UserEntityDao myDao;
 
-@Generated(hash = 460200158)
-public UserEntity(Long id, Long uid, String name, long courseId, @NotNull String nick, int role,
+@Generated(hash = 1433178141)
+public UserEntity() {
+}
+@Generated(hash = 422024968)
+public UserEntity(Long id, Long uid, String name, long courseId, @NotNull String nick, Role role,
         int age, Long create_time, String icon, String phone, String address_province,
         String address_city, String address, boolean isvip, boolean isbuy_zone,
         boolean isbuy_limit_export, boolean isbuy_limit_ads) {
@@ -206,9 +242,6 @@ public UserEntity(Long id, Long uid, String name, long courseId, @NotNull String
     this.isbuy_zone = isbuy_zone;
     this.isbuy_limit_export = isbuy_limit_export;
     this.isbuy_limit_ads = isbuy_limit_ads;
-}
-@Generated(hash = 1433178141)
-public UserEntity() {
 }
 /** To-one relationship, resolved on first access. */
 @Generated(hash = 737950312)
@@ -318,5 +351,11 @@ public void update() {
 public void __setDaoSession(DaoSession daoSession) {
     this.daoSession = daoSession;
     myDao = daoSession != null ? daoSession.getUserEntityDao() : null;
+}
+public Role getRole() {
+    return this.role;
+}
+public void setRole(Role role) {
+    this.role = role;
 }
 }

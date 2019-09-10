@@ -14,29 +14,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
             <Button
-                android:text="添加用户name_01"
-                android:id="@+id/bt_add_user"
+                android:text="添加数据"
+                android:id="@+id/bt_add"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
-            <Button
-                android:text="添加用户name_02"
-                android:id="@+id/bt_add_user2"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="44dp" />
-            <Button
-                android:text="添加用户name_03"
-                android:id="@+id/bt_add_user3"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="44dp" />
-            <Button
-                android:text="添加用户name_04"
-                android:id="@+id/bt_add_user4"
-                android:gravity="center"
-                android:layout_width="match_parent"
-                android:layout_height="44dp" />
+
             <Button
                 android:text="普通查询用户"
                 android:id="@+id/bt_find_user"
@@ -68,14 +51,20 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />\
             <Button
-                android:text="在多个线程中执行查询"
+                android:text="在多个线程中执行查询(NO)"
                 android:id="@+id/bt_thread_find"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
             <Button
-                android:text="原始StringCondition查询"
+                android:text="原始StringCondition查询(NO)"
                 android:id="@+id/bt_oristr_find"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
+            <Button
+                android:text="删除查询(NO)"
+                android:id="@+id/bt_oristr_del"
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />

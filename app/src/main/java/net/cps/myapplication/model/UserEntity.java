@@ -11,23 +11,28 @@ import org.greenrobot.greendao.annotation.ToOne;
 import org.greenrobot.greendao.annotation.Transient;
 import org.greenrobot.greendao.annotation.Unique;
 import org.greenrobot.greendao.converter.PropertyConverter;
-
 import java.util.List;
+import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.DaoException;
+import net.cps.myapplication.entity.greendao.DaoSession;
+import net.cps.myapplication.entity.greendao.AccountEntityDao;
+import net.cps.myapplication.entity.greendao.CourseEntityDao;
+import net.cps.myapplication.entity.greendao.UserEntityDao;
 
 @Entity(
 //        schema = "userscheme",// schema 名，多个 schema 时设置关联实体。插件产生不支持，需使用产生器
-        active = true,// 标记一个实体是否处于活动状态，活动实体有 update、delete、refresh 方法。默认为 false
-        nameInDb = "AWESOME_USERS",//表名，默认为类名
+//        active = true,// 标记一个实体是否处于活动状态，活动实体有 update、delete、refresh 方法。默认为 false
+//        nameInDb = "AWESOME_USERS",//表名，默认为类名
         // 定义多列索引
-        indexes = {
-                @Index(value = "name DESC", unique = true)
-        },
+//        indexes = {
+//                @Index(value = "name DESC", unique = true)
+//        },
         // 标记是否创建表，默认 true。多实体对应一个表或者表已创建，不需要 greenDAO 创建时设置 false
-        createInDb = true,
+//        createInDb = true,
         // 是否产生所有参数构造器。默认为 true。无参构造器必定产生
-        generateConstructors = true,
+//        generateConstructors = true,
         // 如果没有 get/set 方法，是否生成。默认为 true
-        generateGettersSetters = true
+//        generateGettersSetters = true
 
 )
 public class UserEntity {
@@ -83,6 +88,288 @@ public class UserEntity {
     private boolean isbuy_zone; // 是否购买云空间
     private boolean isbuy_limit_export;// 是否购买导出数据权限
     private boolean isbuy_limit_ads;// 是否购买屏蔽广告权限
+
+    /** Used to resolve relations */
+    @Generated(hash = 2040040024)
+    private transient DaoSession daoSession;
+
+    /** Used for active entity operations. */
+    @Generated(hash = 1814575071)
+    private transient UserEntityDao myDao;
+
+    @Generated(hash = 355586091)
+    public UserEntity(Long id, Long uid, String name, long courseId,
+            @NotNull String nick, Role role, int age, Long create_time, String icon,
+            String phone, Long addressProvinceID, Long addressCityId,
+            String address, boolean isvip, boolean isbuy_zone,
+            boolean isbuy_limit_export, boolean isbuy_limit_ads) {
+        this.id = id;
+        this.uid = uid;
+        this.name = name;
+        this.courseId = courseId;
+        this.nick = nick;
+        this.role = role;
+        this.age = age;
+        this.create_time = create_time;
+        this.icon = icon;
+        this.phone = phone;
+        this.addressProvinceID = addressProvinceID;
+        this.addressCityId = addressCityId;
+        this.address = address;
+        this.isvip = isvip;
+        this.isbuy_zone = isbuy_zone;
+        this.isbuy_limit_export = isbuy_limit_export;
+        this.isbuy_limit_ads = isbuy_limit_ads;
+    }
+
+    @Generated(hash = 1433178141)
+    public UserEntity() {
+    }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUid() {
+        return this.uid;
+    }
+
+    public void setUid(Long uid) {
+        this.uid = uid;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public long getCourseId() {
+        return this.courseId;
+    }
+
+    public void setCourseId(long courseId) {
+        this.courseId = courseId;
+    }
+
+    public String getNick() {
+        return this.nick;
+    }
+
+    public void setNick(String nick) {
+        this.nick = nick;
+    }
+
+    public Role getRole() {
+        return this.role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
+
+    public int getAge() {
+        return this.age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public Long getCreate_time() {
+        return this.create_time;
+    }
+
+    public void setCreate_time(Long create_time) {
+        this.create_time = create_time;
+    }
+
+    public String getIcon() {
+        return this.icon;
+    }
+
+    public void setIcon(String icon) {
+        this.icon = icon;
+    }
+
+    public String getPhone() {
+        return this.phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    public Long getAddressProvinceID() {
+        return this.addressProvinceID;
+    }
+
+    public void setAddressProvinceID(Long addressProvinceID) {
+        this.addressProvinceID = addressProvinceID;
+    }
+
+    public Long getAddressCityId() {
+        return this.addressCityId;
+    }
+
+    public void setAddressCityId(Long addressCityId) {
+        this.addressCityId = addressCityId;
+    }
+
+    public String getAddress() {
+        return this.address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    public boolean getIsvip() {
+        return this.isvip;
+    }
+
+    public void setIsvip(boolean isvip) {
+        this.isvip = isvip;
+    }
+
+    public boolean getIsbuy_zone() {
+        return this.isbuy_zone;
+    }
+
+    public void setIsbuy_zone(boolean isbuy_zone) {
+        this.isbuy_zone = isbuy_zone;
+    }
+
+    public boolean getIsbuy_limit_export() {
+        return this.isbuy_limit_export;
+    }
+
+    public void setIsbuy_limit_export(boolean isbuy_limit_export) {
+        this.isbuy_limit_export = isbuy_limit_export;
+    }
+
+    public boolean getIsbuy_limit_ads() {
+        return this.isbuy_limit_ads;
+    }
+
+    public void setIsbuy_limit_ads(boolean isbuy_limit_ads) {
+        this.isbuy_limit_ads = isbuy_limit_ads;
+    }
+
+    @Generated(hash = 2050378249)
+    private transient Long coursemodel__resolvedKey;
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 737950312)
+    public CourseEntity getCoursemodel() {
+        long __key = this.courseId;
+        if (coursemodel__resolvedKey == null
+                || !coursemodel__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            CourseEntityDao targetDao = daoSession.getCourseEntityDao();
+            CourseEntity coursemodelNew = targetDao.load(__key);
+            synchronized (this) {
+                coursemodel = coursemodelNew;
+                coursemodel__resolvedKey = __key;
+            }
+        }
+        return coursemodel;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 297327591)
+    public void setCoursemodel(@NotNull CourseEntity coursemodel) {
+        if (coursemodel == null) {
+            throw new DaoException(
+                    "To-one property 'courseId' has not-null constraint; cannot set to-one to null");
+        }
+        synchronized (this) {
+            this.coursemodel = coursemodel;
+            courseId = coursemodel.getCourseId();
+            coursemodel__resolvedKey = courseId;
+        }
+    }
+
+    /**
+     * To-many relationship, resolved on first access (and after reset).
+     * Changes to to-many relations are not persisted, make changes to the target entity.
+     */
+    @Generated(hash = 2013377999)
+    public List<AccountEntity> getAccountlist() {
+        if (accountlist == null) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            AccountEntityDao targetDao = daoSession.getAccountEntityDao();
+            List<AccountEntity> accountlistNew = targetDao
+                    ._queryUserEntity_Accountlist(id);
+            synchronized (this) {
+                if (accountlist == null) {
+                    accountlist = accountlistNew;
+                }
+            }
+        }
+        return accountlist;
+    }
+
+    /** Resets a to-many relationship, making the next get call to query for a fresh result. */
+    @Generated(hash = 1410064263)
+    public synchronized void resetAccountlist() {
+        accountlist = null;
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#delete(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 128553479)
+    public void delete() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.delete(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#refresh(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 1942392019)
+    public void refresh() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.refresh(this);
+    }
+
+    /**
+     * Convenient call for {@link org.greenrobot.greendao.AbstractDao#update(Object)}.
+     * Entity must attached to an entity context.
+     */
+    @Generated(hash = 713229351)
+    public void update() {
+        if (myDao == null) {
+            throw new DaoException("Entity is detached from DAO context");
+        }
+        myDao.update(this);
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 287999134)
+    public void __setDaoSession(DaoSession daoSession) {
+        this.daoSession = daoSession;
+        myDao = daoSession != null ? daoSession.getUserEntityDao() : null;
+    }
 
     public enum Role {
         DEFAULT(0), AUTHOR(1), ADMIN(2);

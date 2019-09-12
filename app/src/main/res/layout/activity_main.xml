@@ -75,7 +75,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
             <Button
-                android:text="删库"
+                android:text="删库跑路"
                 android:id="@+id/del_db"
                 android:gravity="center"
                 android:layout_width="match_parent"

@@ -11,12 +11,12 @@ import net.cps.myapplication.entity.greendao.CourseEntityDao;
 import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
 import net.cps.myapplication.model.UserEntity;
+import net.cps.myapplication.ui.AddDataActivity;
 
 import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
-import java.lang.reflect.Array;
 import java.util.Arrays;
 import java.util.List;
 
@@ -37,7 +37,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_add).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(new Intent(MainActivity.this,AddDataActivity.class));
+                startActivity(new Intent(MainActivity.this, AddDataActivity.class));
             }
         });
 

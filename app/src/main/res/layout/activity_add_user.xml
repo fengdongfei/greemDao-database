@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <EditText
+        android:id="@+id/etname"
+        android:hint="请输入用户名"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <EditText
+        android:id="@+id/etuid"
+        android:hint="请输入UID"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <EditText
+        android:id="@+id/etcourid"
+        android:hint="请输入CourseID"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:id="@+id/btsaveuser"
+        android:text="保存用户"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <Button
+        android:id="@+id/btfind"
+        android:text="查询"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <ScrollView
+        android:fillViewport="true"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <Button
+            android:id="@+id/tvresult"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </ScrollView>
+
+</LinearLayout>

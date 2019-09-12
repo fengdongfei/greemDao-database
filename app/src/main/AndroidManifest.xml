@@ -17,7 +17,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".AddDataActivity"/>
+        <activity android:name=".ui.AddDataActivity"/>
+        <activity android:name=".ui.AddProvinceActivity"/>
+        <activity android:name=".ui.AddCityActivity"/>
+        <activity android:name=".ui.AddUserActivity"/>
+        <activity android:name=".ui.AddAccountActivity"/>
     </application>
 
 </manifest>

@@ -8,8 +8,8 @@ import android.view.View;
 import net.cps.myapplication.BApp;
 import net.cps.myapplication.R;
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
-import net.cps.myapplication.entity.greendao.CourseEntityDao;
 import net.cps.myapplication.entity.greendao.DaoSession;
+import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
 
 public class AddDataActivity extends Activity {
@@ -17,7 +17,8 @@ public class AddDataActivity extends Activity {
     private UserEntityDao userDao;
     private DaoSession daoSession;
     private AccountEntityDao accountDao;
-    private CourseEntityDao courseDao;
+    private ProvinceEntityDao cityDao;
+    private ProvinceEntityDao provinceDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +59,9 @@ public class AddDataActivity extends Activity {
         userDao = daoSession.getUserEntityDao();
         // 账单
         accountDao=daoSession.getAccountEntityDao();
-        // 课程
-        courseDao=daoSession.getCourseEntityDao();
+        // 省
+        provinceDao=daoSession.getProvinceEntityDao();
+        // 市
+        cityDao=daoSession.getProvinceEntityDao();
     }
 }

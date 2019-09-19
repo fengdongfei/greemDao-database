@@ -19,6 +19,16 @@
         android:hint="请输入CourseID"
         android:layout_width="match_parent"
         android:layout_height="44dp" />
+    <EditText
+        android:id="@+id/provinceid"
+        android:hint="请输入省份"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
+    <EditText
+        android:id="@+id/cityid"
+        android:hint="请输入市"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
     <Button
         android:id="@+id/btsaveuser"
         android:text="保存用户"

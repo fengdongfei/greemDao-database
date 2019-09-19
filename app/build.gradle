@@ -37,7 +37,7 @@ dependencies {
 }
 
 greendao {
-    schemaVersion 2
+    schemaVersion 1
     daoPackage 'net.cps.myapplication.entity.greendao'
     // API 'variant.getJavaCompiler()' is obsolete and has been replaced with 'variant.getJavaCompileProvid 注释下面代码
 //    targetGenDir 'src/main/java'

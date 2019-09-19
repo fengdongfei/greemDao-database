@@ -35,7 +35,10 @@ public class AddProvinceActivity extends Activity {
                 ProvinceEntity provinceEntity=new ProvinceEntity();
                 provinceEntity.setPid(Long.valueOf(etprovincepid.getText().toString()));
                 provinceEntity.setPname(etprovince.getText().toString());
-                provinceDao.insert(provinceEntity);
+                provinceDao.save(provinceEntity);
+                // 清除缓存,保证数据不因为缓存无法查询
+                daoSession.clear();
+
             }
         });
 

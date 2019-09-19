@@ -16,8 +16,9 @@ import org.greenrobot.greendao.annotation.Generated;
 import org.greenrobot.greendao.DaoException;
 import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
-import net.cps.myapplication.entity.greendao.CourseEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
+import net.cps.myapplication.entity.greendao.CityEntityDao;
+import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 
 @Entity(
 //        schema = "userscheme",// schema 名，多个 schema 时设置关联实体。插件产生不支持，需使用产生器
@@ -48,7 +49,8 @@ public class UserEntity {
     // 列名，默认使用变量名。默认变化：name --> USER_NAME
     @Property(nameInDb = "USER_NAME")
     private String name;
-
+    //  - @Index：使用@Index作为一个属性来创建一个索引，通过name设置索引别名，也可以通过unique给索引添加约束
+    //  - @Unique：向数据库列添加了一个唯一的约束
     // 索引，unique设置唯一，courseId设置索引别名 向索引添加UNIQUE约束，强制所有值都是唯一的
     @Index(unique = true)
     private long courseId;
@@ -57,14 +59,21 @@ public class UserEntity {
     @Transient
     private int tempUsageCount;
 
-    // 对一关系，实体属性 joinProperty 对应外联实体ID
-    // 一个用户对应一个学习课程
-    @ToOne(joinProperty = "courseId")
-    private CourseEntity coursemodel;
+    // 对一关系，实体属性 joinProperty 对应外联实体ID  注意: joinProperty后面的id要卸载自己UserEntity类中
+    // 一个用户对应一个省市 1-1  这里的意思是 addressProvinceID作为外键与ProvinceEntity中的主键（也就是id）相连。
+    private Long addressProvinceID;
+
+    @ToOne(joinProperty = "addressProvinceID")
+    private ProvinceEntity provinceEntity;
+
+    private Long addressCityId;
+
+    @ToOne(joinProperty = "addressCityId")
+    private CityEntity cityEntity;
 
     // 对多。实体ID对应外联实体属性 referencedJoinProperty: 指定目标实体中指向此实体的id的“外键”属性的名称。
-    // 一个用户对应多个账单
-    @ToMany(referencedJoinProperty = "account_id")
+    // 一个用户对应多个账单 1-n
+    @ToMany(referencedJoinProperty = "userid")
     private List<AccountEntity> accountlist;
 
     // 非空
@@ -81,8 +90,6 @@ public class UserEntity {
     private Long create_time;
     private String icon;
     private String phone;
-    private Long addressProvinceID;
-    private Long addressCityId;
     private String address;
     private boolean isvip;// 是否是vip
     private boolean isbuy_zone; // 是否购买云空间
@@ -97,24 +104,24 @@ public class UserEntity {
     @Generated(hash = 1814575071)
     private transient UserEntityDao myDao;
 
-    @Generated(hash = 355586091)
+    @Generated(hash = 1292675818)
     public UserEntity(Long id, Long uid, String name, long courseId,
-            @NotNull String nick, Role role, int age, Long create_time, String icon,
-            String phone, Long addressProvinceID, Long addressCityId,
+            Long addressProvinceID, Long addressCityId, @NotNull String nick,
+            Role role, int age, Long create_time, String icon, String phone,
             String address, boolean isvip, boolean isbuy_zone,
             boolean isbuy_limit_export, boolean isbuy_limit_ads) {
         this.id = id;
         this.uid = uid;
         this.name = name;
         this.courseId = courseId;
+        this.addressProvinceID = addressProvinceID;
+        this.addressCityId = addressCityId;
         this.nick = nick;
         this.role = role;
         this.age = age;
         this.create_time = create_time;
         this.icon = icon;
         this.phone = phone;
-        this.addressProvinceID = addressProvinceID;
-        this.addressCityId = addressCityId;
         this.address = address;
         this.isvip = isvip;
         this.isbuy_zone = isbuy_zone;
@@ -156,6 +163,22 @@ public class UserEntity {
 
     public void setCourseId(long courseId) {
         this.courseId = courseId;
+    }
+
+    public Long getAddressProvinceID() {
+        return this.addressProvinceID;
+    }
+
+    public void setAddressProvinceID(Long addressProvinceID) {
+        this.addressProvinceID = addressProvinceID;
+    }
+
+    public Long getAddressCityId() {
+        return this.addressCityId;
+    }
+
+    public void setAddressCityId(Long addressCityId) {
+        this.addressCityId = addressCityId;
     }
 
     public String getNick() {
@@ -206,22 +229,6 @@ public class UserEntity {
         this.phone = phone;
     }
 
-    public Long getAddressProvinceID() {
-        return this.addressProvinceID;
-    }
-
-    public void setAddressProvinceID(Long addressProvinceID) {
-        this.addressProvinceID = addressProvinceID;
-    }
-
-    public Long getAddressCityId() {
-        return this.addressCityId;
-    }
-
-    public void setAddressCityId(Long addressCityId) {
-        this.addressCityId = addressCityId;
-    }
-
     public String getAddress() {
         return this.address;
     }
@@ -262,40 +269,70 @@ public class UserEntity {
         this.isbuy_limit_ads = isbuy_limit_ads;
     }
 
-    @Generated(hash = 2050378249)
-    private transient Long coursemodel__resolvedKey;
+    @Generated(hash = 1096506328)
+    private transient Long provinceEntity__resolvedKey;
 
     /** To-one relationship, resolved on first access. */
-    @Generated(hash = 737950312)
-    public CourseEntity getCoursemodel() {
-        long __key = this.courseId;
-        if (coursemodel__resolvedKey == null
-                || !coursemodel__resolvedKey.equals(__key)) {
+    @Generated(hash = 442988044)
+    public ProvinceEntity getProvinceEntity() {
+        Long __key = this.addressProvinceID;
+        if (provinceEntity__resolvedKey == null
+                || !provinceEntity__resolvedKey.equals(__key)) {
             final DaoSession daoSession = this.daoSession;
             if (daoSession == null) {
                 throw new DaoException("Entity is detached from DAO context");
             }
-            CourseEntityDao targetDao = daoSession.getCourseEntityDao();
-            CourseEntity coursemodelNew = targetDao.load(__key);
+            ProvinceEntityDao targetDao = daoSession.getProvinceEntityDao();
+            ProvinceEntity provinceEntityNew = targetDao.load(__key);
             synchronized (this) {
-                coursemodel = coursemodelNew;
-                coursemodel__resolvedKey = __key;
+                provinceEntity = provinceEntityNew;
+                provinceEntity__resolvedKey = __key;
             }
         }
-        return coursemodel;
+        return provinceEntity;
     }
 
     /** called by internal mechanisms, do not call yourself. */
-    @Generated(hash = 297327591)
-    public void setCoursemodel(@NotNull CourseEntity coursemodel) {
-        if (coursemodel == null) {
-            throw new DaoException(
-                    "To-one property 'courseId' has not-null constraint; cannot set to-one to null");
-        }
+    @Generated(hash = 1882443447)
+    public void setProvinceEntity(ProvinceEntity provinceEntity) {
         synchronized (this) {
-            this.coursemodel = coursemodel;
-            courseId = coursemodel.getCourseId();
-            coursemodel__resolvedKey = courseId;
+            this.provinceEntity = provinceEntity;
+            addressProvinceID = provinceEntity == null ? null
+                    : provinceEntity.getId();
+            provinceEntity__resolvedKey = addressProvinceID;
+        }
+    }
+
+    @Generated(hash = 1379525409)
+    private transient Long cityEntity__resolvedKey;
+
+    /** To-one relationship, resolved on first access. */
+    @Generated(hash = 1033097088)
+    public CityEntity getCityEntity() {
+        Long __key = this.addressCityId;
+        if (cityEntity__resolvedKey == null
+                || !cityEntity__resolvedKey.equals(__key)) {
+            final DaoSession daoSession = this.daoSession;
+            if (daoSession == null) {
+                throw new DaoException("Entity is detached from DAO context");
+            }
+            CityEntityDao targetDao = daoSession.getCityEntityDao();
+            CityEntity cityEntityNew = targetDao.load(__key);
+            synchronized (this) {
+                cityEntity = cityEntityNew;
+                cityEntity__resolvedKey = __key;
+            }
+        }
+        return cityEntity;
+    }
+
+    /** called by internal mechanisms, do not call yourself. */
+    @Generated(hash = 1480419989)
+    public void setCityEntity(CityEntity cityEntity) {
+        synchronized (this) {
+            this.cityEntity = cityEntity;
+            addressCityId = cityEntity == null ? null : cityEntity.getId();
+            cityEntity__resolvedKey = addressCityId;
         }
     }
 
@@ -370,6 +407,8 @@ public class UserEntity {
         this.daoSession = daoSession;
         myDao = daoSession != null ? daoSession.getUserEntityDao() : null;
     }
+
+
 
     public enum Role {
         DEFAULT(0), AUTHOR(1), ADMIN(2);

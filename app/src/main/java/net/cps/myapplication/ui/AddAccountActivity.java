@@ -20,7 +20,7 @@ import java.util.List;
 
 public class AddAccountActivity extends Activity {
     private DaoSession daoSession;
-    private EditText etcontent, etaid,etlassfy,etcmoney;
+    private EditText etcontent, etaid,etlassfy,etcmoney,etcUID;
     private Button btsaveuser,tvresult;
     private AccountEntityDao accountDao;
 
@@ -39,7 +39,10 @@ public class AddAccountActivity extends Activity {
                 accountEntity.setCreateTime(System.currentTimeMillis()/1000);
                 accountEntity.setMoney(Long.valueOf(etcmoney.getText().toString()));
                 accountEntity.setClassfy(etlassfy.getText().toString());
-                accountDao.insert(accountEntity);
+                accountEntity.setUserid(Long.parseLong(etcUID.getText().toString()));
+                accountDao.save(accountEntity);
+                // 清除缓存,保证数据不因为缓存无法查询
+                daoSession.clear();
             }
         });
 
@@ -58,6 +61,7 @@ public class AddAccountActivity extends Activity {
         etaid =(EditText)findViewById(R.id.etaid);
         etlassfy =(EditText)findViewById(R.id.etlassfy);
         etcmoney =(EditText)findViewById(R.id.etcmoney);
+        etcUID =(EditText)findViewById(R.id.etcUID);
         btsaveuser=findViewById(R.id.btsaveuser);
         tvresult=findViewById(R.id.tvresult);
 

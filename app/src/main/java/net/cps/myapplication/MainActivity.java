@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
-import net.cps.myapplication.entity.greendao.CourseEntityDao;
+import net.cps.myapplication.entity.greendao.CityEntityDao;
 import net.cps.myapplication.entity.greendao.DaoSession;
+import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
+import net.cps.myapplication.model.AccountEntity;
+import net.cps.myapplication.model.CityEntity;
+import net.cps.myapplication.model.ProvinceEntity;
 import net.cps.myapplication.model.UserEntity;
 import net.cps.myapplication.ui.AddDataActivity;
 
@@ -25,9 +31,10 @@ public class MainActivity extends AppCompatActivity {
     private UserEntityDao userDao;
     private DaoSession daoSession;
     private AccountEntityDao accountDao;
-    private CourseEntityDao courseDao;
     public int limit=2;
     public int page=0;
+    private ProvinceEntityDao provinceDao;
+    private CityEntityDao cityDao;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +45,16 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 startActivity(new Intent(MainActivity.this, AddDataActivity.class));
+            }
+        });
+        findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<UserEntity> joes1 = userDao.queryBuilder().list();
+                List<ProvinceEntity> joes2 =provinceDao .queryBuilder().list();
+                List<CityEntity> joes3 = cityDao.queryBuilder().list();
+                List<AccountEntity> joes4 = accountDao.queryBuilder().list();
+                Log.d("查询用户信息", ": "+ JSON.toJSONString(joes1,true));
             }
         });
 
@@ -166,7 +183,9 @@ public class MainActivity extends AppCompatActivity {
         userDao = daoSession.getUserEntityDao();
         // 账单
         accountDao=daoSession.getAccountEntityDao();
-        // 课程
-        courseDao=daoSession.getCourseEntityDao();
+        // chengtshi
+        cityDao=daoSession.getCityEntityDao();
+        //sheng
+        provinceDao=daoSession.getProvinceEntityDao();
     }
 }

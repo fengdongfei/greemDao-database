@@ -19,7 +19,12 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
-
+            <Button
+                android:text="查询关联表数据"
+                android:id="@+id/bt_test"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
             <Button
                 android:text="普通查询用户"
                 android:id="@+id/bt_find_user"

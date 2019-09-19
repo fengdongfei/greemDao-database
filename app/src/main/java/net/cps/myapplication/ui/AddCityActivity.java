@@ -37,7 +37,9 @@ public class AddCityActivity extends Activity {
                 CityEntity provinceEntity=new CityEntity();
                 provinceEntity.setCid(Long.valueOf(etprovincepid.getText().toString()));
                 provinceEntity.setCname(etprovince.getText().toString());
-                cityDao.insert(provinceEntity);
+                cityDao.save(provinceEntity);
+                // 清除缓存,保证数据不因为缓存无法查询
+                daoSession.clear();
             }
         });
 

@@ -24,6 +24,11 @@
         android:hint="请输入money"
         android:layout_width="match_parent"
         android:layout_height="44dp" />
+    <EditText
+        android:id="@+id/etcUID"
+        android:hint="请输入UID"
+        android:layout_width="match_parent"
+        android:layout_height="44dp" />
     <Button
         android:id="@+id/btsaveuser"
         android:text="保存账单"

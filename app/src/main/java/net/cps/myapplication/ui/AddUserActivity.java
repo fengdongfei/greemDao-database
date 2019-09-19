@@ -19,7 +19,7 @@ import java.util.List;
 
 public class AddUserActivity extends Activity {
     private DaoSession daoSession;
-    private EditText etuname, etuid,etcourid;
+    private EditText etuname, etuid,etcourid,provinceid,cityid;
     private Button btsaveuser,tvresult;
     private UserEntityDao userDao;
 
@@ -36,8 +36,12 @@ public class AddUserActivity extends Activity {
                 userEntity.setUid(Long.valueOf(etuid.getText().toString()));
                 userEntity.setName(etuname.getText().toString());
                 userEntity.setCourseId(Long.parseLong(etcourid.getText().toString()));
+                userEntity.setAddressProvinceID(Long.parseLong(provinceid.getText().toString()));
+                userEntity.setAddressCityId(Long.parseLong(cityid.getText().toString()));
                 userEntity.setNick("nick_name");
-                userDao.insert(userEntity);
+                userDao.save(userEntity);
+                // 清除缓存,保证数据不因为缓存无法查询
+                daoSession.clear();
             }
         });
 
@@ -55,6 +59,8 @@ public class AddUserActivity extends Activity {
         etuname =(EditText)findViewById(R.id.etname);
         etuid =(EditText)findViewById(R.id.etuid);
         etcourid =(EditText)findViewById(R.id.etcourid);
+        provinceid =(EditText)findViewById(R.id.provinceid);
+        cityid =(EditText)findViewById(R.id.cityid);
         btsaveuser=findViewById(R.id.btsaveuser);
         tvresult=findViewById(R.id.tvresult);
 

@@ -50,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                daoSession.clear();
                 List<UserEntity> joes1 = userDao.queryBuilder().list();
                 List<ProvinceEntity> joes2 =provinceDao .queryBuilder().list();
                 List<CityEntity> joes3 = cityDao.queryBuilder().list();

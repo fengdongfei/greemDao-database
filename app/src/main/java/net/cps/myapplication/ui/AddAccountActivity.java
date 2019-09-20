@@ -41,8 +41,6 @@ public class AddAccountActivity extends Activity {
                 accountEntity.setClassfy(etlassfy.getText().toString());
                 accountEntity.setUserid(Long.parseLong(etcUID.getText().toString()));
                 accountDao.save(accountEntity);
-                // 清除缓存,保证数据不因为缓存无法查询
-                daoSession.clear();
             }
         });
 

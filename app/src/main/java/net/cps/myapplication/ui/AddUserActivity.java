@@ -40,8 +40,6 @@ public class AddUserActivity extends Activity {
                 userEntity.setAddressCityId(Long.parseLong(cityid.getText().toString()));
                 userEntity.setNick("nick_name");
                 userDao.save(userEntity);
-                // 清除缓存,保证数据不因为缓存无法查询
-                daoSession.clear();
             }
         });
 

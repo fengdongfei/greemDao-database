@@ -22,20 +22,15 @@ import java.util.List;
 // https://blog.csdn.net/qq_35956194/article/details/79167897
 public class MyOpenHelper extends DaoMaster.OpenHelper {
 
-    private List<Class> classes=new ArrayList<>();
     public MyOpenHelper(Context context, String name, SQLiteDatabase.CursorFactory factory) {
         super(context, name, factory);
-        classes.add(UserEntityDao.class);
-        classes.add(AccountEntityDao.class);
-        classes.add(ProvinceEntityDao.class);
-        classes.add(CityEntityDao.class);
     }
  
     @Override
     public void onUpgrade(Database db, int oldVersion, int newVersion) {
  
         //把需要管理的数据库表DAO作为最后一个参数传入到方法中
-        for (int x=0;x<classes.size();x++){
+
             MigrationHelper.migrate(db, new MigrationHelper.ReCreateAllTableListener() {
 
                 @Override
@@ -47,8 +42,6 @@ public class MyOpenHelper extends DaoMaster.OpenHelper {
                 public void onDropAllTables(Database db, boolean ifExists) {
                     DaoMaster.dropAllTables(db, ifExists);
                 }
-            },  classes.get(x));
+            }, UserEntityDao.class, AccountEntityDao.class,ProvinceEntityDao.class,CityEntityDao.class);
         }
-
-    }
 }

@@ -10,13 +10,14 @@ import org.greenrobot.greendao.database.Database;
 public class BApp extends Application {
 
     private DaoSession daoSession;
+    public static final boolean ENCRYPTED = true;
 
     @Override
     public void onCreate() {
         super.onCreate();
-        MyOpenHelper mSQLiteOpenHelper = new MyOpenHelper(getApplicationContext(), "notes-db", null);
-        DaoMaster mDaoMaster = new DaoMaster(mSQLiteOpenHelper.getWritableDatabase());
-        daoSession = mDaoMaster.newSession();
+        DBOpenHelper mSQLiteOpenHelper = new DBOpenHelper(this,  ENCRYPTED ? "notes-encrypted.db" : "notes.db", null);
+        Database db = ENCRYPTED ? mSQLiteOpenHelper.getEncryptedWritableDb("<password1!feifei>") : mSQLiteOpenHelper.getWritableDb();
+        daoSession = new DaoMaster(db).newSession();
     }
     public DaoSession getDaoSession() {
         return daoSession;

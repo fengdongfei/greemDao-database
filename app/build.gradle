@@ -34,7 +34,8 @@ dependencies {
     implementation 'com.alibaba:fastjson:1.2.12'
     // 使用数据库升级辅助GreenDaoUpgradeHelper时添加
     implementation 'io.github.yuweiguocn:GreenDaoUpgradeHelper:2.2.1'
-//    compile 'net.zetetic:android-database-sqlcipher:3.5.7'//使用加密数据库时需要添加
+    //使用加密数据库时需要添加
+    implementation 'net.zetetic:android-database-sqlcipher:3.5.7'
 }
 
 greendao {

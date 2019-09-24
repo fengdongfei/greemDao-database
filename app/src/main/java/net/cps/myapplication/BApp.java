@@ -23,4 +23,13 @@ public class BApp extends Application {
         return daoSession;
     }
 
+    private static BApp INSTANCE;
+
+    public static BApp getInstance() {
+        return INSTANCE;
+    }
+
+    public static String getDBName(){
+        return  ENCRYPTED ? "notes-encrypted.db" : "notes.db";
+    }
 }

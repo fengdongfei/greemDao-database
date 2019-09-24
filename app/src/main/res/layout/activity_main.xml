@@ -85,6 +85,19 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
+
+            <Button
+                android:text="数据备份"
+                android:id="@+id/beifei_db"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
+            <Button
+                android:text="数据恢复"
+                android:id="@+id/restore_db"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
         </LinearLayout>
     </ScrollView>
 

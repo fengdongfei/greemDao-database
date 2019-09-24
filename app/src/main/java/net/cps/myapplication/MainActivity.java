@@ -47,6 +47,18 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AddDataActivity.class));
             }
         });
+        findViewById(R.id.beifei_db).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+        findViewById(R.id.restore_db).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

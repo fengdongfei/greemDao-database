@@ -36,6 +36,10 @@ dependencies {
     implementation 'io.github.yuweiguocn:GreenDaoUpgradeHelper:2.2.1'
     //使用加密数据库时需要添加
     implementation 'net.zetetic:android-database-sqlcipher:3.5.7'
+    // 数据库备份
+    implementation 'com.snatik:storage:2.1.0'
+    // 权限管理
+    implementation 'pub.devrel:easypermissions:1.2.0'
 }
 
 greendao {

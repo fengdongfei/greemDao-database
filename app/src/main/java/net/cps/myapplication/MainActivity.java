@@ -2,10 +2,7 @@ package net.cps.myapplication;
 
 import android.Manifest;
 import android.content.Intent;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -15,7 +12,6 @@ import com.alibaba.fastjson.JSON;
 
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
 import net.cps.myapplication.entity.greendao.CityEntityDao;
-import net.cps.myapplication.entity.greendao.DaoMaster;
 import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;

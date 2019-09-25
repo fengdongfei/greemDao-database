@@ -12,7 +12,7 @@ public class BApp extends Application {
 
     private DaoSession daoSession;
     // 是否加密数据库
-    public static final boolean ENCRYPTED = false;
+    public static final boolean ENCRYPTED = true;
     private static DBOpenHelper mSQLiteOpenHelper;
 
     @Override

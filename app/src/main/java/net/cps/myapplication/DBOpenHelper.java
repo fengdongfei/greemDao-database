@@ -2,12 +2,15 @@ package net.cps.myapplication;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+
+
 import com.github.yuweiguocn.library.greendao.MigrationHelper;
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
 import net.cps.myapplication.entity.greendao.CityEntityDao;
 import net.cps.myapplication.entity.greendao.DaoMaster;
 import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
+
 import org.greenrobot.greendao.database.Database;
 
 // 版本升级解决数据丢失问题

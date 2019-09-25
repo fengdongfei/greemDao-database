@@ -1,12 +1,16 @@
 package net.cps.myapplication;
 
 import android.app.Application;
+import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
 import net.cps.myapplication.entity.greendao.DaoMaster;
 import net.cps.myapplication.entity.greendao.DaoSession;
 
 import org.greenrobot.greendao.database.Database;
+
+import java.io.File;
+import java.io.IOException;
 
 public class BApp extends Application {
 

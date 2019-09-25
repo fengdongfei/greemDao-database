@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <paths>
+        <!--
+            files-path代表的根目录： Context.getFilesDir()
+            external-path代表的根目录: Environment.getExternalStorageDirectory()
+            cache-path代表的根目录: getCacheDir()
+        -->
+        <!--<external-path path="Android/data/net.cps.myapplication/" name="files_root"/>-->
+        <!--<external-path-->
+            <!--name="."-->
+            <!--path="external_storage_root" />-->
+
+        <external-path name="external_files" path="backup_money_mitu/"/>
+    </paths>
+</resources>

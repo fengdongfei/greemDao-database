@@ -98,6 +98,12 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
+            <Button
+                android:text="打开数据备份文件夹"
+                android:id="@+id/openfile_db"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
         </LinearLayout>
     </ScrollView>
 

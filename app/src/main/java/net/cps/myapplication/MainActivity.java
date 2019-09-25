@@ -1,6 +1,11 @@
 package net.cps.myapplication;
 
+import android.Manifest;
 import android.content.Intent;
+import android.database.sqlite.SQLiteDatabase;
+import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,10 +15,12 @@ import com.alibaba.fastjson.JSON;
 
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
 import net.cps.myapplication.entity.greendao.CityEntityDao;
+import net.cps.myapplication.entity.greendao.DaoMaster;
 import net.cps.myapplication.entity.greendao.DaoSession;
 import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
 import net.cps.myapplication.model.AccountEntity;
+import net.cps.myapplication.model.BackupBean;
 import net.cps.myapplication.model.CityEntity;
 import net.cps.myapplication.model.ProvinceEntity;
 import net.cps.myapplication.model.UserEntity;
@@ -26,7 +33,11 @@ import org.greenrobot.greendao.query.WhereCondition;
 import java.util.Arrays;
 import java.util.List;
 
-public class MainActivity extends AppCompatActivity {
+import pub.devrel.easypermissions.AppSettingsDialog;
+import pub.devrel.easypermissions.EasyPermissions;
+import pub.devrel.easypermissions.PermissionRequest;
+
+public class MainActivity extends AppCompatActivity implements EasyPermissions.PermissionCallbacks {
 
     private UserEntityDao userDao;
     private DaoSession daoSession;
@@ -47,18 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, AddDataActivity.class));
             }
         });
-        findViewById(R.id.beifei_db).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
-        findViewById(R.id.restore_db).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
         findViewById(R.id.bt_test).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -184,8 +184,47 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.del_db).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // 删库
-                userDao.deleteAll();
+                BApp.deleSQL();
+            }
+        });
+
+        findViewById(R.id.beifei_db).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (EasyPermissions.hasPermissions(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    Utils.startBackUp(MainActivity.this,Utils.fileName);
+                    return;
+                }
+                EasyPermissions.requestPermissions(
+                        new PermissionRequest.Builder(MainActivity.this, 12, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                .setRationale(R.string.text_storage_content)
+                                .setPositiveButtonText(R.string.text_affirm)
+                                .setNegativeButtonText(R.string.text_button_cancel)
+                                .build());
+            }
+        });
+        findViewById(R.id.restore_db).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (EasyPermissions.hasPermissions(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                    // 放置crush 清楚缓存
+                    daoSession.clear();
+                    List<BackupBean> backupBeans = Utils.getBackupFiles();
+                    Utils.startRestoreDb(MainActivity.this,backupBeans);
+                    return;
+                }
+                EasyPermissions.requestPermissions(
+                        new PermissionRequest.Builder(MainActivity.this, 13, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                .setRationale(R.string.text_storage_content)
+                                .setPositiveButtonText(R.string.text_affirm)
+                                .setNegativeButtonText(R.string.text_button_cancel)
+                                .build());
+            }
+        });
+        findViewById(R.id.openfile_db).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Utils.showFileChooser(MainActivity.this);
             }
         });
     }
@@ -201,4 +240,41 @@ public class MainActivity extends AppCompatActivity {
         //sheng
         provinceDao=daoSession.getProvinceEntityDao();
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this);
+    }
+
+    @Override
+    public void onPermissionsGranted(int requestCode, @NonNull List<String> perms) {
+        switch (requestCode) {
+            case 12:
+                Utils.startBackUp(MainActivity.this,Utils.fileName);
+                break;
+            case 13:
+                // 放置crush 清楚缓存
+                daoSession.clear();
+                List<BackupBean> backupBeans = Utils.getBackupFiles();
+                Utils.startRestoreDb(MainActivity.this,backupBeans);
+                break;
+            default:
+                break;
+        }
+    }
+
+    @Override
+    public void onPermissionsDenied(int requestCode, @NonNull List<String> perms) {
+        if (EasyPermissions.somePermissionPermanentlyDenied(this, perms)) {
+            new AppSettingsDialog.Builder(this)
+                    .setRationale(R.string.text_storage_permission_tip)
+                    .setTitle(R.string.text_storage)
+                    .setPositiveButton(R.string.text_affirm)
+                    .setNegativeButton(R.string.text_button_cancel)
+                    .build()
+                    .show();
+        }
+    }
+
 }

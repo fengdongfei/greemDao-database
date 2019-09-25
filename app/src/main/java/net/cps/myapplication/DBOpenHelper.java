@@ -36,4 +36,5 @@ public class DBOpenHelper extends DaoMaster.OpenHelper {
                 }
             }, UserEntityDao.class, AccountEntityDao.class,ProvinceEntityDao.class,CityEntityDao.class);
         }
+
 }

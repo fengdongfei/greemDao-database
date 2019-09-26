@@ -104,6 +104,12 @@
                 android:gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="44dp" />
+            <Button
+                android:text="导出excel"
+                android:id="@+id/_excel"
+                android:gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="44dp" />
         </LinearLayout>
     </ScrollView>
 

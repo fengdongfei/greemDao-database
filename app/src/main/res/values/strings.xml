@@ -127,4 +127,5 @@
     <string name="text_app_slogan">简单、纯粹的记账应用</string>
     <string name="text_share_content">我发现了一个简单、纯粹的记账应用，点击链接下载 https://github.com/Bakumon/MoneyKeeper/releases/latest</string>
     <string name="text_before_reverting">_恢复之前</string>
+    <string name="text_daochu_content">导出excel表格相关操作需要存储权限，去设置界面开启权限</string>
 </resources>

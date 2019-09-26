@@ -2,11 +2,13 @@ package net.cps.myapplication;
 
 import android.Manifest;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
@@ -26,9 +28,24 @@ import org.greenrobot.greendao.query.Query;
 import org.greenrobot.greendao.query.QueryBuilder;
 import org.greenrobot.greendao.query.WhereCondition;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.channels.ReadPendingException;
 import java.util.Arrays;
 import java.util.List;
 
+import jxl.format.Alignment;
+import jxl.format.Border;
+import jxl.format.BorderLineStyle;
+import jxl.format.Colour;
+import jxl.format.VerticalAlignment;
+import jxl.read.biff.BiffException;
+import jxl.write.WritableCellFormat;
+import jxl.write.WritableFont;
+import jxl.write.WriteException;
+import me.zhouzhuo.zzexcelcreator.ColourUtil;
+import me.zhouzhuo.zzexcelcreator.ZzExcelCreator;
+import me.zhouzhuo.zzexcelcreator.ZzFormatCreator;
 import pub.devrel.easypermissions.AppSettingsDialog;
 import pub.devrel.easypermissions.EasyPermissions;
 import pub.devrel.easypermissions.PermissionRequest;
@@ -223,6 +240,116 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 Utils.showFileChooser(MainActivity.this);
             }
         });
+        findViewById(R.id._excel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                    // 参考资料: https://github.com/zhouzhuo810/ZzExcelCreator
+                    if (EasyPermissions.hasPermissions(MainActivity.this, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        createExcel();
+                        return;
+                    }
+                    EasyPermissions.requestPermissions(
+                            new PermissionRequest.Builder(MainActivity.this, 14, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.READ_EXTERNAL_STORAGE)
+                                    .setRationale(R.string.text_daochu_content)
+                                    .setPositiveButtonText(R.string.text_affirm)
+                                    .setNegativeButtonText(R.string.text_button_cancel)
+                                    .build());
+            }
+        });
+    }
+
+    private void createExcel() {
+        // 创建Excel文件和工作表
+        try {
+            new AsyncTask<String, Void, Integer>() {
+
+                @Override
+                protected Integer doInBackground(String... params) {
+                    try {
+                        // 创建excel
+                        ZzExcelCreator
+                                .getInstance()
+                                .createExcel(Contents.EXCEL_PATH, params[0]) // todo 动态excel名称
+                                .createSheet(params[1]) // todo 动态sheet
+                                .close();
+                        // addSheet
+                        ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(Contents.EXCEL_PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
+                                .createSheet(params[1]+"_new") // todo 动态sheet
+                                .close();
+                        // 添加excel内容--string
+                        ZzExcelCreator zzExcelCreator = ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(Contents.EXCEL_PATH + params[0] + ".xls"))
+                                .openSheet(0);//todo 打开第1个sheet
+                        WritableCellFormat cellFormat = ZzFormatCreator
+                                .getInstance()
+                                .createCellFont(WritableFont.ARIAL)
+                                .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
+                                .setFontSize(30)
+                                .setFontBold(true)
+                                .setUnderline(true)
+                                .setItalic(true)
+                                .setWrapContent(true, 100)
+                                .setFontColor(ColourUtil.getCustomColor3("#0187fb"))
+                                .getCellFormat();
+                        zzExcelCreator
+                                .fillContent(Integer.parseInt("0"), Integer.parseInt("0"), "内容", cellFormat) // todo 添加行列对应的内容 列行string内容
+                                .close();
+                        // 添加excel内容--int
+                        ZzExcelCreator zzExcelCreator1 = ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(Contents.EXCEL_PATH +  params[0] + ".xls"))
+                                .openSheet(0);//todo 打开第1个sheet
+                        WritableCellFormat cellFormat1 = ZzFormatCreator
+                                .getInstance()
+                                .createCellFont(WritableFont.ARIAL)
+                                .setAlignment(Alignment.CENTRE, VerticalAlignment.CENTRE)
+                                .setFontSize(20)
+                                .setFontColor(Colour.WHITE)
+                                .setBackgroundColor(ColourUtil.getCustomColor1("#99cc00"))
+                                .setBorder(Border.ALL, BorderLineStyle.THIN, ColourUtil.getCustomColor2("#dddddd"))
+                                .getCellFormat();
+                        zzExcelCreator1.fillNumber(Integer.parseInt("0"), Integer.parseInt("1"), Double.parseDouble("100"), cellFormat1)// todo 添加行列对应的内容 列行int内容
+                                .close();
+                        // 获取cell内容
+                        ZzExcelCreator zzExcelCreator2 = ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(Contents.EXCEL_PATH +  params[0] + ".xls"))
+                                .openSheet(0);   //todo 打开第1个sheet
+                        String content = zzExcelCreator2.getCellContent(Integer.parseInt("0"), Integer.parseInt("0"));// todo 获取行列对应的内容 列行string
+                        zzExcelCreator2.close();
+                        Log.e("getcell ", "doInBackground: "+content );
+                        // 合并
+                        ZzExcelCreator
+                                .getInstance()
+                                .openExcel(new File(Contents.EXCEL_PATH +  params[0]  + ".xls"))
+                                .openSheet(0) // todo 打开第1个sheet
+                                .merge(Integer.parseInt("0"), Integer.parseInt("0"), Integer.parseInt("1"), Integer.parseInt("0")) // todo 合并起始行号,结束列号,结束行号,结束列号
+                                .close();
+
+                        return 1;
+                    } catch (IOException | WriteException | BiffException e) {
+                        e.printStackTrace();
+                        return 0;
+                    }
+                }
+
+                @Override
+                protected void onPostExecute(Integer aVoid) {
+                    super.onPostExecute(aVoid);
+                    if (aVoid == 1) {
+                        Toast.makeText(MainActivity.this, "数据导出成功！请到" + Contents.EXCEL_PATH + "路径下查看~", Toast.LENGTH_SHORT).show();
+                    } else {
+                        Toast.makeText(MainActivity.this, "数据导出失败！", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }.execute("mitu_excel_backup", "user_sheet");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
     }
 
     private void initDao() {
@@ -254,6 +381,9 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 daoSession.clear();
                 List<BackupBean> backupBeans = Utils.getBackupFiles();
                 Utils.startRestoreDb(MainActivity.this,backupBeans);
+                break;
+            case 14:
+                createExcel();
                 break;
             default:
                 break;

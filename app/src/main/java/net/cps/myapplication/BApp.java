@@ -23,8 +23,8 @@ public class BApp extends Application {
     public void onCreate() {
         super.onCreate();
         INSTANCE=this;
-         mSQLiteOpenHelper = new DBOpenHelper(this,  ENCRYPTED ? "notes-encrypted.db" : "notes.db", null);
-        Database db = ENCRYPTED ? mSQLiteOpenHelper.getEncryptedWritableDb("<password1!feifei>") : mSQLiteOpenHelper.getWritableDb();
+         mSQLiteOpenHelper = new DBOpenHelper(this,  ENCRYPTED ? Contents.DB_NAME_ENCRIPT : Contents.DB_NAME, null);
+        Database db = ENCRYPTED ? mSQLiteOpenHelper.getEncryptedWritableDb(Contents.DB_KEY) : mSQLiteOpenHelper.getWritableDb();
         daoSession = new DaoMaster(db).newSession();
     }
     public DaoSession getDaoSession() {

@@ -10,6 +10,7 @@ import net.cps.myapplication.entity.greendao.CityEntityDao;
 import net.cps.myapplication.entity.greendao.DaoMaster;
 import net.cps.myapplication.entity.greendao.ProvinceEntityDao;
 import net.cps.myapplication.entity.greendao.UserEntityDao;
+import net.sqlcipher.database.SQLiteDatabaseHook;
 
 import org.greenrobot.greendao.database.Database;
 

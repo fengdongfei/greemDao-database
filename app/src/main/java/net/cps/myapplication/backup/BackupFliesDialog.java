@@ -14,16 +14,17 @@
  *  limitations under the License.
  */
 
-package net.cps.myapplication;
+package net.cps.myapplication.backup;
 
 import android.content.Context;
-import android.support.annotation.Nullable;
 import android.support.design.widget.BottomSheetDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 
+import net.cps.myapplication.R;
+import net.cps.myapplication.backup.FilesAdapter;
 import net.cps.myapplication.model.BackupBean;
 
 import java.io.File;

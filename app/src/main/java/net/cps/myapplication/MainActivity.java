@@ -12,6 +12,8 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
+import net.cps.myapplication.backup.Contents;
+import net.cps.myapplication.backup.Utils;
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
 import net.cps.myapplication.entity.greendao.CityEntityDao;
 import net.cps.myapplication.entity.greendao.DaoSession;
@@ -30,7 +32,6 @@ import org.greenrobot.greendao.query.WhereCondition;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.channels.ReadPendingException;
 import java.util.Arrays;
 import java.util.List;
 

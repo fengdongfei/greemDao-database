@@ -14,9 +14,12 @@
  *  limitations under the License.
  */
 
-package net.cps.myapplication;
+package net.cps.myapplication.backup;
 
 import android.annotation.SuppressLint;
+
+import net.cps.myapplication.BApp;
+import net.cps.myapplication.R;
 
 import java.text.DateFormat;
 import java.text.ParseException;

@@ -1,28 +1,23 @@
-package net.cps.myapplication;
+package net.cps.myapplication.backup;
 
 import android.app.Activity;
-import android.app.ActivityManager;
-import android.content.ActivityNotFoundException;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Environment;
-import android.os.ParcelUuid;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.snatik.storage.Storage;
 
+import net.cps.myapplication.BApp;
+import net.cps.myapplication.R;
 import net.cps.myapplication.model.BackupBean;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
 import java.io.File;
-import java.security.PublicKey;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;

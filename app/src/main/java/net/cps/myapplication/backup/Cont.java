@@ -2,7 +2,7 @@ package net.cps.myapplication.backup;
 
 import android.os.Environment;
 
-class Contents {
+public class Cont {
     public static final String DB_KEY = "<password1!feifei>";
     public static final String DB_NAME_ENCRIPT = "notes-encrypted.db";
     public static final String DB_NAME = "notes.db";

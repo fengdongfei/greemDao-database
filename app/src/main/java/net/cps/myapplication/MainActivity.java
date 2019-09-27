@@ -12,7 +12,7 @@ import android.widget.Toast;
 
 import com.alibaba.fastjson.JSON;
 
-import net.cps.myapplication.backup.Contents;
+import net.cps.myapplication.backup.Cont;
 import net.cps.myapplication.backup.Utils;
 import net.cps.myapplication.entity.greendao.AccountEntityDao;
 import net.cps.myapplication.entity.greendao.CityEntityDao;
@@ -270,19 +270,19 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         // 创建excel
                         ZzExcelCreator
                                 .getInstance()
-                                .createExcel(Contents.EXCEL_PATH, params[0]) // todo 动态excel名称
+                                .createExcel(Cont.EXCEL_PATH, params[0]) // todo 动态excel名称
                                 .createSheet(params[1]) // todo 动态sheet
                                 .close();
                         // addSheet
                         ZzExcelCreator
                                 .getInstance()
-                                .openExcel(new File(Contents.EXCEL_PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
+                                .openExcel(new File(Cont.EXCEL_PATH + params[0] + ".xls"))  //如果不想覆盖文件，注意是openExcel
                                 .createSheet(params[1]+"_new") // todo 动态sheet
                                 .close();
                         // 添加excel内容--string
                         ZzExcelCreator zzExcelCreator = ZzExcelCreator
                                 .getInstance()
-                                .openExcel(new File(Contents.EXCEL_PATH + params[0] + ".xls"))
+                                .openExcel(new File(Cont.EXCEL_PATH + params[0] + ".xls"))
                                 .openSheet(0);//todo 打开第1个sheet
                         WritableCellFormat cellFormat = ZzFormatCreator
                                 .getInstance()
@@ -301,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         // 添加excel内容--int
                         ZzExcelCreator zzExcelCreator1 = ZzExcelCreator
                                 .getInstance()
-                                .openExcel(new File(Contents.EXCEL_PATH +  params[0] + ".xls"))
+                                .openExcel(new File(Cont.EXCEL_PATH +  params[0] + ".xls"))
                                 .openSheet(0);//todo 打开第1个sheet
                         WritableCellFormat cellFormat1 = ZzFormatCreator
                                 .getInstance()
@@ -317,7 +317,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         // 获取cell内容
                         ZzExcelCreator zzExcelCreator2 = ZzExcelCreator
                                 .getInstance()
-                                .openExcel(new File(Contents.EXCEL_PATH +  params[0] + ".xls"))
+                                .openExcel(new File(Cont.EXCEL_PATH +  params[0] + ".xls"))
                                 .openSheet(0);   //todo 打开第1个sheet
                         String content = zzExcelCreator2.getCellContent(Integer.parseInt("0"), Integer.parseInt("0"));// todo 获取行列对应的内容 列行string
                         zzExcelCreator2.close();
@@ -325,7 +325,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                         // 合并
                         ZzExcelCreator
                                 .getInstance()
-                                .openExcel(new File(Contents.EXCEL_PATH +  params[0]  + ".xls"))
+                                .openExcel(new File(Cont.EXCEL_PATH +  params[0]  + ".xls"))
                                 .openSheet(0) // todo 打开第1个sheet
                                 .merge(Integer.parseInt("0"), Integer.parseInt("0"), Integer.parseInt("1"), Integer.parseInt("0")) // todo 合并起始行号,结束列号,结束行号,结束列号
                                 .close();
@@ -341,7 +341,7 @@ public class MainActivity extends AppCompatActivity implements EasyPermissions.P
                 protected void onPostExecute(Integer aVoid) {
                     super.onPostExecute(aVoid);
                     if (aVoid == 1) {
-                        Toast.makeText(MainActivity.this, "数据导出成功！请到" + Contents.EXCEL_PATH + "路径下查看~", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(MainActivity.this, "数据导出成功！请到" + Cont.EXCEL_PATH + "路径下查看~", Toast.LENGTH_SHORT).show();
                     } else {
                         Toast.makeText(MainActivity.this, "数据导出失败！", Toast.LENGTH_SHORT).show();
                     }
